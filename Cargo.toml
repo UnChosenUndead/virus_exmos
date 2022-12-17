@@ -1,0 +1,8 @@
+[package]
+name = "virus_exmos"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy = "0.9.0"
+bevy-inspector-egui = "0.14.0"
