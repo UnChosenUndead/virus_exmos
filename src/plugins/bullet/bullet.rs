@@ -23,7 +23,7 @@ pub struct LifeTime {
 }
 
 #[derive(Resource, Default, Debug)]
-pub struct GameAssets {
+pub struct BulletAssets {
     pub bullet_scene: Handle<Scene>,
 }
 
@@ -70,7 +70,7 @@ pub fn move_bullets(mut bullets: Query<(&Bullet, &mut Transform)>, time: Res<Tim
 }
 
 pub fn bullet_asset_load(mut commands: Commands, assets: Res<AssetServer>) {
-    commands.insert_resource(GameAssets {
+    commands.insert_resource(BulletAssets {
         bullet_scene: assets.load("Bullet.glb#Scene0"),
     });
 }

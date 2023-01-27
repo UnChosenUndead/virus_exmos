@@ -1,12 +1,13 @@
-mod entity;
-mod plugins;
-mod scenes;
-
-use crate::scenes::basic_scene::BasicScenePlugin;
 use bevy::prelude::KeyCode::H;
 use bevy::prelude::*;
 use bevy::window::{CompositeAlphaMode, CursorGrabMode, PresentMode};
-use bevy_inspector_egui::WorldInspectorPlugin;
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
+
+use crate::scenes::basic_scene::BasicScenePlugin;
+
+mod entity;
+mod plugins;
+mod scenes;
 
 pub const HEIGHT: f32 = 720.0;
 pub const WIDTH: f32 = 1280.0;
@@ -24,6 +25,6 @@ fn main() {
             },
             ..default()
         }))
-        .add_plugin(WorldInspectorPlugin::new())
+        .add_plugin(WorldInspectorPlugin)
         .run();
 }

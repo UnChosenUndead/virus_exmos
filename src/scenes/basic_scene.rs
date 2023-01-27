@@ -1,19 +1,21 @@
+use bevy::prelude::*;
+use bevy::render::camera::CameraPlugin;
+
 use crate::entity::entity::Health;
 use crate::plugins::bullet::bullet::BulletPlugin;
-use crate::plugins::camera::camera::CameraPlugin;
+use crate::plugins::player::player::PlayerPlugin;
 use crate::plugins::target::target::{Target, TargetPlugin};
 use crate::plugins::tower::tower::{Tower, TowerPlugin};
-use bevy::prelude::*;
 
 pub struct BasicScenePlugin;
 
 impl Plugin for BasicScenePlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugin(BulletPlugin)
+        app.add_startup_system(spawn_basic_scene)
+            .add_plugin(BulletPlugin)
             .add_plugin(TowerPlugin)
-            .add_plugin(CameraPlugin)
             .add_plugin(TargetPlugin)
-            .add_startup_system(spawn_basic_scene);
+            .add_plugin(PlayerPlugin);
     }
 }
 

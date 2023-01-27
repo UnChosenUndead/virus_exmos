@@ -1,4 +1,4 @@
-use crate::plugins::bullet::bullet::{Bullet, GameAssets, LifeTime};
+use crate::plugins::bullet::bullet::{Bullet, BulletAssets, LifeTime};
 use crate::plugins::target::target::Target;
 use bevy::app::App;
 use bevy::math::Vec3;
@@ -24,7 +24,7 @@ pub fn tower_shooting(
     mut towers: Query<(Entity, &mut Tower, &GlobalTransform)>,
     targets: Query<&GlobalTransform, With<Target>>,
     time: Res<Time>,
-    bullet_assets: Res<GameAssets>,
+    bullet_assets: Res<BulletAssets>,
 ) {
     for (tower_ent, mut tower, transform) in &mut towers.iter_mut() {
         tower.shooting_timer.tick(time.delta());
