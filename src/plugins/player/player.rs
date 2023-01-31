@@ -100,41 +100,58 @@ pub fn spawn_player_camera(mut commands: Commands) {
 }
 
 pub fn camera_player_control(
-    keyboard: Res<Input<KeyCode>>,
     mut ps: ParamSet<(
-        Query<&mut Transform, With<Camera3d>>,
-        Query<&mut Transform, With<Player>>,
-    )>,
-    time: Res<Time>,
+    Query<&mut Transform, With<Camera3d>>,
+    Query<&Transform, With<Player>>
+    )>
 ) {
-    let speed: f32 = 3.0;
-    let player = ps.p1().single().clone();
-    let mut binding = ps.p0();
-    let mut camera = binding.single_mut();
-    let mut camera_forward = camera.forward();
-    let mut camera_left = camera.left();
-    let rotate_speed = 0.3;
-    camera_left.y = 0.0;
-    camera_left = camera_left.normalize();
-    camera_forward.y = 0.0;
-    camera_forward = camera_forward.normalize();
+    let player_transform = *ps.p1().single();
+    let player_back = player_transform.back();
+    let position = player_transform.translation;
+    let rotation = player_transform.rotation;
 
-    if keyboard.pressed(KeyCode::W) {
-        camera.translation += camera_forward * time.delta_seconds() * speed;
-    }
-    if keyboard.pressed(KeyCode::S) {
-        camera.translation -= camera_forward * time.delta_seconds() * speed;
-    }
-    if keyboard.pressed(KeyCode::A) {
-        camera.translation += camera_left * time.delta_seconds() * speed;
-    }
-    if keyboard.pressed(KeyCode::D) {
-        camera.translation -= camera_left * time.delta_seconds() * speed;
-    }
-    if keyboard.pressed(KeyCode::Q) {
-        camera.rotate_axis(Vec3::Y, rotate_speed * time.delta_seconds())
-    }
-    if keyboard.pressed(KeyCode::E) {
-        camera.rotate_axis(Vec3::Y, -rotate_speed * time.delta_seconds())
-    }
+    let mut bind = ps.p0();
+    let mut camera = bind.single_mut();
+    camera.translation = position + player_back;
+    camera.rotation = rotation;
 }
+
+// pub fn camera_player_control(
+//     keyboard: Res<Input<KeyCode>>,
+//     mut ps: ParamSet<(
+//         Query<&mut Transform, With<Camera3d>>,
+//         Query<&mut Transform, With<Player>>,
+//     )>,
+//     time: Res<Time>,
+// ) {
+//     let speed: f32 = 3.0;
+//     let player = ps.p1().single().clone();
+//     let mut binding = ps.p0();
+//     let mut camera = binding.single_mut();
+//     let mut camera_forward = camera.forward();
+//     let mut camera_left = camera.left();
+//     let rotate_speed = 0.3;
+//     camera_left.y = 0.0;
+//     camera_left = camera_left.normalize();
+//     camera_forward.y = 0.0;
+//     camera_forward = camera_forward.normalize();
+//
+//     if keyboard.pressed(KeyCode::W) {
+//         camera.translation += camera_forward * time.delta_seconds() * speed;
+//     }
+//     if keyboard.pressed(KeyCode::S) {
+//         camera.translation -= camera_forward * time.delta_seconds() * speed;
+//     }
+//     if keyboard.pressed(KeyCode::A) {
+//         camera.translation += camera_left * time.delta_seconds() * speed;
+//     }
+//     if keyboard.pressed(KeyCode::D) {
+//         camera.translation -= camera_left * time.delta_seconds() * speed;
+//     }
+//     if keyboard.pressed(KeyCode::Q) {
+//         camera.rotate_axis(Vec3::Y, rotate_speed * time.delta_seconds())
+//     }
+//     if keyboard.pressed(KeyCode::E) {
+//         camera.rotate_axis(Vec3::Y, -rotate_speed * time.delta_seconds())
+//     }
+// }
