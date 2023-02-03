@@ -64,7 +64,7 @@ pub fn bullet_despawn(
 }
 
 pub fn move_bullets(mut bullets: Query<(&Bullet, &mut Transform)>, time: Res<Time>) {
-    for (mut bullet, mut transform) in bullets.iter_mut() {
+    for (bullet, mut transform) in bullets.iter_mut() {
         transform.translation += bullet.direction.normalize() * bullet.speed * time.delta_seconds()
     }
 }
